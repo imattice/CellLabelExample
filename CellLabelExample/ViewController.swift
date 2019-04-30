@@ -17,6 +17,9 @@ class ViewController: UIViewController {
 		super.viewDidLoad()
 		// Do any additional setup after loading the view.
 
+		tableView.estimatedRowHeight	= 100
+		tableView.rowHeight 			= UITableView.automaticDimension
+
 		addTableData()
 	}
 
@@ -50,12 +53,17 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
 		guard let cell = tableView.cellForRow(at: indexPath) as? CustomCell else { return }
 		let data = tableData[indexPath.row]
 
+		print("# of lines before tap: \(cell.detailLabel.numberOfLines)")
+
 		tableView.beginUpdates()
 		cell.tapped(isOpen: data.isOpen)
 		tableView.endUpdates()
 
 		tableData[indexPath.row].isOpen = !data.isOpen
 		tableView.reloadRows(at: [indexPath], with: .fade)
+
+		print("# of lines after tap: \(cell.detailLabel.numberOfLines)")
+
 
 		//		tableView.reloadData()	}
 	}
